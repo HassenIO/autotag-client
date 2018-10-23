@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { Header } from '../components';
+import { PrivateRoute, Header } from '../components';
 import View from '../views';
 
 /**
@@ -14,8 +14,12 @@ export default () => {
       <Switch>
         <Route exact path="/" component={View.Home} />
         <Route exact path="/login" component={View.Login} />
-        <Route exact path="/project/:id" component={View.Project} />
-        <Route exact path="/project/:project_id/resource/:id" component={View.Resource} />
+        <PrivateRoute exact path="/project/:id" component={View.Project} />
+        <PrivateRoute
+          exact
+          path="/project/:project_id/resource/:id"
+          component={View.Resource}
+        />
         <Route path="*" component={View.NotFound} />
       </Switch>
     </Fragment>
