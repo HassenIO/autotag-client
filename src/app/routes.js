@@ -13,6 +13,7 @@ export default () => {
       <Header />
       <Switch>
         <Route exact path="/" component={View.Home} />
+        <Route exact path="/login" component={View.Login} />
         <Route exact path="/project/:id" component={View.Project} />
         <Route exact path="/project/:project_id/resource/:id" component={View.Resource} />
         <Route path="*" component={View.NotFound} />
