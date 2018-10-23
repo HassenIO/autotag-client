@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Actions from './actions';
 import './style.css';
 
 function mapStateToProps(state) {
-  return {
-    text: state.home.text
-  };
+  return state;
 }
 
 class Home extends Component {
-  componentDidMount() {
-    this.props.dispatch(Actions.start('Hello World!'));
-  }
-
   render() {
     return (
       <div className="Home">

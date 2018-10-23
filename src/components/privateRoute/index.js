@@ -1,17 +1,21 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import { withRouter } from 'react-router';
+import { Auth } from 'aws-amplify';
 
-export default ({ component: Component, ...other }) => (
-  <Route
-    {...other}
-    render={props =>
-      localStorage.getItem('isAuthenticated') ? ( // Change using state/store
-        <Component {...props} />
-      ) : (
-        <Redirect
-          to={{ pathname: '/login', state: { from: props.location } }}
-        />
-      )
+class PrivateRoute extends React.Component {
+  async componentDidMount() {
+    try {
+      await Auth.currentAuthenticatedUser();
+    } catch (e) {
+      this.props.history.push('/login');
     }
-  />
-);
+  }
+
+  render() {
+    const { component: Component, ...other } = this.props;
+    return <Route {...other} render={props => <Component {...props} />} />;
+  }
+}
+
+export default withRouter(PrivateRoute);

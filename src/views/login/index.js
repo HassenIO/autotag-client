@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
+import { Auth } from 'aws-amplify';
 import { FormControl, TextField, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import { authActions } from '../../actions';
 import { Layer } from '../../components';
 import './style.css';
 
@@ -30,8 +32,16 @@ function mapStateToProps(state) {
 class Login extends Component {
   state = {
     email: '',
-    password: ''
+    password: '',
+    isLoading: false
   };
+
+  async componentDidMount() {
+    try {
+      await Auth.currentAuthenticatedUser();
+      this.props.history.push('/');
+    } catch (e) {}
+  }
 
   handleChange = name => event => {
     this.setState({
@@ -39,12 +49,25 @@ class Login extends Component {
     });
   };
 
+  handleSubmit = async event => {
+    event.preventDefault();
+    this.setState({ isLoading: true });
+    try {
+      await Auth.signIn(this.state.email, this.state.password);
+      this.props.dispatch(authActions.login());
+      this.props.history.push('/');
+    } catch (e) {
+      alert(e.message);
+      this.setState({ isLoading: false });
+    }
+  };
+
   render() {
     const { classes } = this.props;
     return (
       <div className="Login">
         <Layer size={2}>
-          <form>
+          <form onSubmit={this.handleSubmit}>
             <FormControl fullWidth>
               <TextField
                 className={classes.textField}
@@ -71,6 +94,8 @@ class Login extends Component {
                 className={classNames(classes.button, {
                   [classes.buttonBlue]: true
                 })}
+                onClick={this.handleSubmit}
+                disabled={this.state.isLoading}
               >
                 Me connecter
               </Button>

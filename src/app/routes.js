@@ -12,8 +12,9 @@ export default () => {
     <Fragment>
       <Header />
       <Switch>
-        <Route exact path="/" component={View.Home} />
+        <PrivateRoute exact path="/" component={View.Home} />
         <Route exact path="/login" component={View.Login} />
+        <Route exact path="/logout" component={View.Logout} />
         <PrivateRoute exact path="/project/:id" component={View.Project} />
         <PrivateRoute
           exact
