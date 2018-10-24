@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Amplify from 'aws-amplify';
+import 'semantic-ui-css/semantic.min.css';
 import amplifyConfig from './config/amplify';
 import App from './app';
 import * as serviceWorker from './serviceWorker';

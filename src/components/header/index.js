@@ -1,19 +1,28 @@
-import React from 'react';
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
-import { Layer } from '../../components';
+import React, { Component } from 'react';
+import { withRouter } from 'react-router';
+import { Menu } from 'semantic-ui-react';
+import { Layer } from '../';
+import './style.css';
 
-export default () => {
-  return (
-    <div className="Header">
-      <AppBar position="static" color="default">
-        <Toolbar>
-          <Layer>
-            <Typography variant="h6" color="inherit">
-              Autotag
-            </Typography>
-          </Layer>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
-};
+class Header extends Component {
+  state = { activeItem: 'home' };
+
+  handleLogout = () => this.props.history.push('/logout');
+
+  render() {
+    return (
+      <div className="Header">
+        <Layer>
+          <Menu>
+            <Menu.Item header name="Autotag" onClick={this.handleItemClick} />
+            <Menu.Menu position="right">
+              <Menu.Item name="logout" onClick={this.handleLogout} />
+            </Menu.Menu>
+          </Menu>
+        </Layer>
+      </div>
+    );
+  }
+}
+
+export default withRouter(Header);
