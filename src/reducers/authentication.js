@@ -8,6 +8,8 @@ export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case CONST.ACTIONS.LOGIN_USER:
       return { ...state, isAuthenticated: true };
+    case CONST.ACTIONS.LOGOUT_USER:
+      return { ...state, isAuthenticated: false };
     default:
       return state;
   }

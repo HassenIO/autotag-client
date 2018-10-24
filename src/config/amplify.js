@@ -14,8 +14,8 @@ export default {
   API: {
     endpoints: [
       {
-        name: 'notes',
         endpoint: process.env.REACT_APP_AWS_API_GATEWAY_URL,
+        name: process.env.REACT_APP_AWS_API_GATEWAY_NAME,
         region: process.env.REACT_APP_AWS_API_GATEWAY_REGION
       }
     ]

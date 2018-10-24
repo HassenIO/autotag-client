@@ -1,13 +1,35 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Menu } from 'semantic-ui-react';
+import { Auth } from 'aws-amplify';
+import { authActions } from '../../actions';
 import { Layer } from '../';
 import './style.css';
 
-class Header extends Component {
-  state = { activeItem: 'home' };
+function mapStateToProps(state) {
+  return {
+    isAuthenticated: state.authentication.isAuthenticated
+  };
+}
 
-  handleLogout = () => this.props.history.push('/logout');
+class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { activeItem: 'home' };
+  }
+
+  async componentDidMount() {
+    try {
+      await Auth.currentAuthenticatedUser();
+      if (!this.props.isAuthenticated) this.props.dispatch(authActions.login());
+    } catch (e) {}
+  }
+
+  handleLogout = () => {
+    this.props.dispatch(authActions.logout());
+    this.props.history.push('/logout');
+  };
 
   render() {
     return (
@@ -16,7 +38,9 @@ class Header extends Component {
           <Menu>
             <Menu.Item header name="Autotag" onClick={this.handleItemClick} />
             <Menu.Menu position="right">
-              <Menu.Item name="logout" onClick={this.handleLogout} />
+              {this.props.isAuthenticated && (
+                <Menu.Item name="logout" onClick={this.handleLogout} />
+              )}
             </Menu.Menu>
           </Menu>
         </Layer>
@@ -25,4 +49,4 @@ class Header extends Component {
   }
 }
 
-export default withRouter(Header);
+export default withRouter(connect(mapStateToProps)(Header));
