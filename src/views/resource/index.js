@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Typography } from '@material-ui/core';
 import { Layer, Title } from '../../components';
 import './style.css';
-
-function mapStateToProps(state) {
-  return state;
-}
 
 class Resource extends Component {
   render() {
@@ -25,4 +20,4 @@ class Resource extends Component {
   }
 }
 
-export default connect(mapStateToProps)(Resource);
+export default Resource;

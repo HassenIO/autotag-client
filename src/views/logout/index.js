@@ -1,10 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Auth } from 'aws-amplify';
-
-function mapStateToProps(state) {
-  return state;
-}
 
 class Logout extends React.Component {
   async componentDidMount() {
@@ -19,4 +14,4 @@ class Logout extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(Logout);
+export default Logout;

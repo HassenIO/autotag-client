@@ -23,25 +23,6 @@ class Login extends Component {
     } catch (e) {}
   }
 
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value
-    });
-  };
-
-  handleSubmit = async event => {
-    event.preventDefault();
-    this.setState({ isLoading: true });
-    try {
-      await Auth.signIn(this.state.email, this.state.password);
-      this.props.dispatch(authActions.login());
-      this.props.history.push('/');
-    } catch (e) {
-      alert(e.message);
-      this.setState({ isLoading: false });
-    }
-  };
-
   render() {
     return (
       <div className="Login">
@@ -70,6 +51,25 @@ class Login extends Component {
       </div>
     );
   }
+
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value
+    });
+  };
+
+  handleSubmit = async event => {
+    event.preventDefault();
+    this.setState({ isLoading: true });
+    try {
+      await Auth.signIn(this.state.email, this.state.password);
+      this.props.dispatch(authActions.login());
+      this.props.history.push('/');
+    } catch (e) {
+      alert(e.message);
+      this.setState({ isLoading: false });
+    }
+  };
 }
 
 export default connect(mapStateToProps)(Login);
