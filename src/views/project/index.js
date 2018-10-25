@@ -9,7 +9,7 @@ import {
   TableCell,
   Chip
 } from '@material-ui/core';
-import { Layer, Title } from '../../components';
+import { Title } from '../../components';
 import './style.css';
 
 // TODO: WILL BE REMOVED WHEN IMPLEMENTING DERVERLESS
@@ -35,47 +35,45 @@ class Project extends Component {
   render() {
     return (
       <div className="Project">
-        <Layer>
-          <Title>Project page</Title>
-          <Typography variant="body1">
-            This page will contain project description with the list of attached
-            resources (files).
-          </Typography>
-          <Paper className="ProjectResourcesPaper">
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Resource name</TableCell>
-                  <TableCell>Status</TableCell>
-                  <TableCell numeric>Added at</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map(row => {
-                  return (
-                    <TableRow
-                      key={row.id}
-                      onClick={() => this.handleRowClick(row.id)}
-                      hover={true}
-                    >
-                      <TableCell component="th" scope="row">
-                        {row.name}
-                      </TableCell>
-                      <TableCell>
-                        <Chip
-                          label={row.status}
-                          color={row.color}
-                          variant="outlined"
-                        />
-                      </TableCell>
-                      <TableCell numeric>{row.addedAt}</TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </Paper>
-        </Layer>
+        <Title>Project page</Title>
+        <Typography variant="body1">
+          This page will contain project description with the list of attached
+          resources (files).
+        </Typography>
+        <Paper className="ProjectResourcesPaper">
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Resource name</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell numeric>Added at</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map(row => {
+                return (
+                  <TableRow
+                    key={row.id}
+                    onClick={() => this.handleRowClick(row.id)}
+                    hover={true}
+                  >
+                    <TableCell component="th" scope="row">
+                      {row.name}
+                    </TableCell>
+                    <TableCell>
+                      <Chip
+                        label={row.status}
+                        color={row.color}
+                        variant="outlined"
+                      />
+                    </TableCell>
+                    <TableCell numeric>{row.addedAt}</TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </Paper>
       </div>
     );
   }

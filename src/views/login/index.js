@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router';
-import { inject, observer } from 'mobx-react';
 import { Auth } from 'aws-amplify';
 import { Grid, Button, Form } from 'semantic-ui-react';
-import { Layer } from '../../components';
+import { wrio } from '../../lib';
 
 class Login extends Component {
   constructor(props) {
@@ -26,28 +24,26 @@ class Login extends Component {
   render() {
     return (
       <div className="Login">
-        <Layer>
-          <Grid>
-            <Grid.Column width={5}>
-              <Form onSubmit={this.handleSubmit} loading={this.state.isLoading}>
-                <Form.Field>
-                  <label>e-mail</label>
-                  <input onChange={this.handleChange('email')} />
-                </Form.Field>
-                <Form.Field>
-                  <label>Mot de passe</label>
-                  <input
-                    type="password"
-                    onChange={this.handleChange('password')}
-                  />
-                </Form.Field>
-                <Button type="submit" onClick={this.handleSubmit}>
-                  Me connecter
-                </Button>
-              </Form>
-            </Grid.Column>
-          </Grid>
-        </Layer>
+        <Grid>
+          <Grid.Column width={5}>
+            <Form onSubmit={this.handleSubmit} loading={this.state.isLoading}>
+              <Form.Field>
+                <label>e-mail</label>
+                <input onChange={this.handleChange('email')} />
+              </Form.Field>
+              <Form.Field>
+                <label>Mot de passe</label>
+                <input
+                  type="password"
+                  onChange={this.handleChange('password')}
+                />
+              </Form.Field>
+              <Button type="submit" onClick={this.handleSubmit}>
+                Me connecter
+              </Button>
+            </Form>
+          </Grid.Column>
+        </Grid>
       </div>
     );
   }
@@ -72,4 +68,4 @@ class Login extends Component {
   };
 }
 
-export default withRouter(inject('store')(observer(Login)));
+export default wrio(['store'], Login);

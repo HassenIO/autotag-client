@@ -6,9 +6,11 @@ import Routes from './routes';
 import './app.css';
 
 export default () => (
-  <Router>
-    <Provider store={store}>
-      <Routes />
-    </Provider>
-  </Router>
+  <div className="App">
+    <Router>
+      <Provider store={store}>
+        <Routes />
+      </Provider>
+    </Router>
+  </div>
 );

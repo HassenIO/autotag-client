@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router';
-import { inject, observer } from 'mobx-react';
 import { Auth } from 'aws-amplify';
 import { Menu } from 'semantic-ui-react';
-import { Layer } from '../';
+import { wrio } from '../../lib';
 import './style.css';
 
 class Header extends Component {
@@ -29,19 +27,17 @@ class Header extends Component {
     const { isAuthenticated } = this.authStore;
     return (
       <div className="Header">
-        <Layer>
-          <Menu>
-            <Menu.Item header name="Autotag" onClick={this.handleItemClick} />
-            <Menu.Menu position="right">
-              {isAuthenticated && (
-                <Menu.Item name="logout" onClick={this.handleLogout} />
-              )}
-            </Menu.Menu>
-          </Menu>
-        </Layer>
+        <Menu>
+          <Menu.Item header name="Autotag" onClick={this.handleItemClick} />
+          <Menu.Menu position="right">
+            {isAuthenticated && (
+              <Menu.Item name="logout" onClick={this.handleLogout} />
+            )}
+          </Menu.Menu>
+        </Menu>
       </div>
     );
   }
 }
 
-export default withRouter(inject('store')(observer(Header)));
+export default wrio(['store'], Header);
