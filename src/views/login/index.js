@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+import { inject, observer } from 'mobx-react';
 import { Auth } from 'aws-amplify';
 import { Grid, Button, Form } from 'semantic-ui-react';
-import { authActions } from '../../actions';
 import { Layer } from '../../components';
 
-function mapStateToProps(state) {
-  return state;
-}
-
 class Login extends Component {
-  state = {
-    email: '',
-    password: '',
-    isLoading: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+      isLoading: false
+    };
+    this.authStore = props.store.auth;
+  }
 
   async componentDidMount() {
     try {
@@ -63,7 +63,7 @@ class Login extends Component {
     this.setState({ isLoading: true });
     try {
       await Auth.signIn(this.state.email, this.state.password);
-      this.props.dispatch(authActions.login());
+      this.authStore.login();
       this.props.history.push('/');
     } catch (e) {
       alert(e.message);
@@ -72,4 +72,4 @@ class Login extends Component {
   };
 }
 
-export default connect(mapStateToProps)(Login);
+export default withRouter(inject('store')(observer(Login)));

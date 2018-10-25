@@ -1,44 +1,39 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { Menu } from 'semantic-ui-react';
+import { inject, observer } from 'mobx-react';
 import { Auth } from 'aws-amplify';
-import { authActions } from '../../actions';
+import { Menu } from 'semantic-ui-react';
 import { Layer } from '../';
 import './style.css';
-
-function mapStateToProps(state) {
-  return {
-    isAuthenticated: state.authentication.isAuthenticated
-  };
-}
 
 class Header extends Component {
   constructor(props) {
     super(props);
     this.state = { activeItem: 'home' };
+    this.authStore = props.store.auth;
   }
 
   async componentDidMount() {
     try {
       await Auth.currentAuthenticatedUser();
-      if (!this.props.isAuthenticated) this.props.dispatch(authActions.login());
+      if (this.authStore.notAuthenticated) this.authStore.login();
     } catch (e) {}
   }
 
   handleLogout = () => {
-    this.props.dispatch(authActions.logout());
+    this.authStore.logout();
     this.props.history.push('/logout');
   };
 
   render() {
+    const { isAuthenticated } = this.authStore;
     return (
       <div className="Header">
         <Layer>
           <Menu>
             <Menu.Item header name="Autotag" onClick={this.handleItemClick} />
             <Menu.Menu position="right">
-              {this.props.isAuthenticated && (
+              {isAuthenticated && (
                 <Menu.Item name="logout" onClick={this.handleLogout} />
               )}
             </Menu.Menu>
@@ -49,4 +44,4 @@ class Header extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(Header));
+export default withRouter(inject('store')(observer(Header)));
