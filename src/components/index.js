@@ -1,5 +1,6 @@
+import DevTools from './devTools';
 import Header from './header';
 import PrivateRoute from './privateRoute';
 import Title from './title';
 
-export { Header, PrivateRoute, Title };
+export { DevTools, Header, PrivateRoute, Title };

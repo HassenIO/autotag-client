@@ -40,4 +40,4 @@ class Header extends Component {
   }
 }
 
-export default wrio(['store'], Header);
+export default wrio(Header);

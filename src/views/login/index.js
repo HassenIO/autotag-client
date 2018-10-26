@@ -68,4 +68,4 @@ class Login extends Component {
   };
 }
 
-export default wrio(['store'], Login);
+export default wrio(Login);
